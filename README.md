@@ -27,3 +27,5 @@ cd bin/Release/net10.0/osx-arm64/publish/
 
 ./primespeed
 ```
+<img width="886" height="608" alt="image" src="https://github.com/user-attachments/assets/b6a25989-7927-41f4-ba88-6769a8931be0" />
+
