@@ -7,7 +7,7 @@
 
 # About
 
-This repository is a proof-of-concept and starter template. Its purpose is to demonstrate a minimal setup for compiling raw .NET IL (`.il`) code directly using `ilasm` (the .NET IL Assembler).
+This repository is a proof-of-concept and starter template. Its purpose is to demonstrate a minimal setup for compiling raw .NET IL (`.il`) code.
 
 The `primespeed.il` file (a simple prime number finder) is included as an example.
 
