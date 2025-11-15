@@ -15,6 +15,7 @@
       [3] int32 maxcheck,
       [4] int32 lastprime
     )
+    
     // Initialize
     ldc.i4.0
     stloc.0          // counter = 0
@@ -22,83 +23,90 @@
     stloc.1          // number = 2
     ldc.i4.2
     stloc.s 4        // lastprime = 2
+    
     // Display start message
     ldstr "Starting prime search (trial division) for 10000000 primes..."
     call void [mscorlib]System.Console::WriteLine(string)
+    
+    // Handle first prime (2) separately
+    ldc.i4.1
+    stloc.0          // counter = 1
+    ldc.i4.3
+    stloc.1          // number = 3 (start from first odd)
+    
   mainLoop:
-    // Check if number is prime
-    ldloc.1
-    ldc.i4.2
-    ble.s isPrime    // 2 is prime
-    ldloc.1
-    ldc.i4.2
-    rem
-    brfalse.s notPrime  // if even - not prime
-    // Calculate sqrt(number) as limit
+    // Calculate sqrt(number) ONCE before checking divisors
     ldloc.1
     conv.r8
     call float64 [mscorlib]System.Math::Sqrt(float64)
     conv.i4
-    stloc.3
+    stloc.3          // maxcheck = sqrt(number)
+    
     ldc.i4.3
     stloc.2          // divisor = 3
+    
   checkLoop:
     ldloc.2
     ldloc.3
     bgt.s isPrime    // divisor > maxcheck? It's prime!
+    
     ldloc.1
     ldloc.2
     rem
     brfalse.s notPrime  // divisible? Not prime!
+    
     ldloc.2
     ldc.i4.2
     add
     stloc.2          // divisor += 2 (only odd numbers)
     br.s checkLoop
+    
   isPrime:
     ldloc.0
     ldc.i4.1
     add
     stloc.0          // counter++
+    
     ldloc.1
-    stloc.s 4        // lastprime = number (save this prime!)
+    stloc.s 4        // lastprime = number
+    
     // Show progress every 1000000 primes
     ldloc.0
     ldc.i4 1000000
     rem
     brtrue.s skipProgress
-    // Build progress string with multiple Concat calls
+    
     ldstr "Found: "
+    call void [mscorlib]System.Console::Write(string)
     ldloc.0
-    box int32
-    call string [mscorlib]System.String::Concat(object, object)
+    call void [mscorlib]System.Console::Write(int32)
     ldstr " primes, last: "
-    call string [mscorlib]System.String::Concat(string, string)
+    call void [mscorlib]System.Console::Write(string)
     ldloc.s 4
-    box int32
-    call string [mscorlib]System.String::Concat(object, object)
-    call void [mscorlib]System.Console::WriteLine(string)
+    call void [mscorlib]System.Console::WriteLine(int32)
+    
   skipProgress:
     ldloc.0
-    ldc.i4 10000000   // 10 million!
-    beq.s done        // found 10 million?
+    ldc.i4 10000000
+    beq.s done       // found 10 million?
+    
   notPrime:
     ldloc.1
-    ldc.i4.1
+    ldc.i4.2
     add
-    stloc.1          // number++
+    stloc.1          // number += 2 (skip even numbers!)
     br.s mainLoop
+    
   done:
     // Display results
     ldstr "===== COMPLETED ====="
     call void [mscorlib]System.Console::WriteLine(string)
-    ldstr "Found 10,000,000 prime numbers!"
+    ldstr "Found 10000000 prime numbers!"
     call void [mscorlib]System.Console::WriteLine(string)
-    ldstr "The 10,000,000th prime is: "
-    ldloc.s 4        // show the actual last prime!
-    box int32
-    call string [mscorlib]System.String::Concat(object, object)
-    call void [mscorlib]System.Console::WriteLine(string)
+    ldstr "The 10000000th prime is: "
+    call void [mscorlib]System.Console::Write(string)
+    ldloc.s 4
+    call void [mscorlib]System.Console::WriteLine(int32)
     ret
   }
 }
