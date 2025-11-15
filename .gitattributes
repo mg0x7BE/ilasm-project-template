@@ -1,4 +1,4 @@
 *.css linguist-vendored
 CMakeLists.txt linguist-vendored
 *.cmake linguist-vendored
-*.il linguist-language=IL
+*.il linguist-language=Assembly
