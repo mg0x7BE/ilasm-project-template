@@ -5,21 +5,30 @@
 ![GitHub forks](https://img.shields.io/github/forks/mg0x7BE/ilasm-project-template)
 ![GitHub Repo stars](https://img.shields.io/github/stars/mg0x7BE/ilasm-project-template)
 
+# ilasm-project-template
 
-# Template Repository
+This repository is a proof-of-concept and starter template. Its purpose is to demonstrate a minimal setup for compiling raw .NET IL (`.il`) code directly using `ilasm` (the .NET IL Assembler).
 
-This repository serves as a template for starting new projects.
+This project **bypasses the C# compiler (`csc`)** and relies solely on custom MSBuild targets to fetch `ilasm` and build the executable.
 
-## Features
+The `primespeed.il` file (a simple prime number finder) is included as an example.
 
-- Easy setup
-- Customizable configurations
-- Some popular badges already in place
+## How to Use
 
-## Getting started
+1. [Download](https://dotnet.microsoft.com/en-us/download) and install .NET on Linux / macOS / Windows 
+2. Run the following commands
+```
+git clone https://github.com/mg0x7BE/ilasm-project-template.git
+cd ilasm-project-template
+dotnet restore
+dotnet build
+```
+3. Run the the program
 
-To use this template, select it from the **Repository template** dropdown when creating a new repository.
+The compiled executable will be in the `bin` directory (the exact path depends on .NET version).
 
-## License
-
-This project is released under the [Unlicense](LICENSE) license.
+```PowerShell
+cd bin
+cd net10.0
+.\primespeed.exe
+```
